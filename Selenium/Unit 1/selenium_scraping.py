@@ -25,7 +25,7 @@ from selenium.common.exceptions import TimeoutException # timeout errors
 import pandas as pd
 
 options = webdriver.ChromeOptions()
-
+#options.add_argument("--incognito")
 driver = webdriver.Chrome("./chromedriver.exe",options=options)
 driver.get("https://www.amazon.com/") # only works with https or http
 
@@ -78,7 +78,7 @@ from selenium.common.exceptions import TimeoutException # timeout errors
 import pandas as pd
 
 options = webdriver.ChromeOptions()
-
+options.add_argument("--incognito")
 driver = webdriver.Chrome("./chromedriver.exe",options=options)
 driver.get("https://www.amazon.com/") # only works with https or http
 
