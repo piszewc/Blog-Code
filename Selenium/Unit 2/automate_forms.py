@@ -10,5 +10,37 @@ from selenium.webdriver.common.by import By # search using specific parameters.
 from selenium.webdriver.support.ui import WebDriverWait #wait for a page to load. 
 from selenium.webdriver.support import expected_conditions as EC #wait for specific element to be loaded.
 from selenium.common.exceptions import TimeoutException # timeout errors
-import pandas as pd
+from selenium.webdriver.support.ui import Select
 
+import pandas as pd
+ 
+data = pd.read_excel("input_items.xlsx")
+
+
+options = webdriver.ChromeOptions()
+#options.add_argument("--incognito")
+driver = webdriver.Chrome("./chromedriver.exe",options=options)
+driver.get("https://forms.office.com/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAN__tPvGS1URFNTU0RQNjdaRThJSVowWDdUMkZTS1dOSy4u") # only works with https or http
+
+# Wait 20 seconds for page to load
+timeout = 20
+
+try:
+    WebDriverWait(driver, timeout).until(EC.visibility_of_element_located((By.CSS_SELECTOR, "div[class='office-form-title heading-1']")))
+except TimeoutException:
+    print("Timed out waiting for page to load") 
+    driver.quit()
+    
+    
+manufacturer = driver.find_element_by_css_selector("div[class='select-placeholder']")
+manufacturer.click()
+
+manufacturer_list = driver.find_element_by_css_selector("ul[class='select-option-menu-container']")
+manufacturer_list.find_element_by_xpath("//div[text()='bmw']'")
+
+
+
+
+#if website is using Select you can use:
+#manufacturer_list = Select(driver.find_element_by_css_selector("ul[class='select-option-menu-container']"))
+#manufacturer_list.select_by_value("bmw")
